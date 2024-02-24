@@ -282,6 +282,7 @@ class StableDiffusionXLInstantIDPipeline(StableDiffusionXLControlNetPipeline):
 
         # IP adapter
         ip_adapter_scale=None,
+        ip_adapter_sdxl=False,
 
         **kwargs,
     ):
@@ -451,23 +452,27 @@ class StableDiffusionXLInstantIDPipeline(StableDiffusionXLControlNetPipeline):
         # 0. set ip_adapter_scale
         if ip_adapter_scale is not None:
             self.set_ip_adapter_scale(ip_adapter_scale)
-
+        # controlnet_conditioning_scale = 0.8    
+        print(type(controlnet_conditioning_scale))
         # 1. Check inputs. Raise error if not correct
         self.check_inputs(
-            prompt,
-            prompt_2,
-            image,
-            callback_steps,
-            negative_prompt,
-            negative_prompt_2,
-            prompt_embeds,
-            negative_prompt_embeds,
-            pooled_prompt_embeds,
-            negative_pooled_prompt_embeds,
-            controlnet_conditioning_scale,
-            control_guidance_start,
-            control_guidance_end,
-            callback_on_step_end_tensor_inputs,
+            prompt=prompt,
+            prompt_2=prompt_2,
+            image=image,
+            callback_steps=callback_steps,
+            negative_prompt=negative_prompt,
+            negative_prompt_2=negative_prompt_2,
+            prompt_embeds=prompt_embeds,
+            negative_prompt_embeds=negative_prompt_embeds,
+            pooled_prompt_embeds=pooled_prompt_embeds,
+            ip_adapter_image_embeds=image_embeds if ip_adapter_sdxl else None,
+            # ip_adapter_image=None,
+            # ip_adapter_image_embeds=None,            
+            negative_pooled_prompt_embeds=negative_pooled_prompt_embeds,
+            controlnet_conditioning_scale=controlnet_conditioning_scale,
+            control_guidance_start=control_guidance_start,
+            control_guidance_end=control_guidance_end,
+            callback_on_step_end_tensor_inputs=callback_on_step_end_tensor_inputs,
         )
 
         self._guidance_scale = guidance_scale
