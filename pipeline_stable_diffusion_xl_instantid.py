@@ -212,7 +212,7 @@ def draw_kps_top(image_pil, kps, stickwidth=4, radii = 10, color_list=[(255,0,0)
     for idx_kp, kp in enumerate(kps):
         color = color_list[idx_kp]
         x, y = kp
-        out_img = cv2.circle(out_img.copy(), (int(x), int(y)), 10 if idx_kp < 3 else radii, color, -1)
+        out_img = cv2.circle(out_img.copy(), (int(x), int(y)), 7 if idx_kp < 3 else radii, color, -1)
 
     out_img_pil = PIL.Image.fromarray(out_img.astype(np.uint8))
     return out_img_pil
